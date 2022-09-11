@@ -55,6 +55,30 @@ export const getall_my = async (req: any, res: Response) => {
     });
   }
 };
+export const getall_my = async (req: any, res: Response) => {
+  const { _id } = req;
+  try {
+    console.log({
+      user_id: new Types.ObjectId(_id),
+    });
+    const results = await service_find_body(
+      {
+        user_id: new Types.ObjectId(_id),
+      },
+      {}
+    );
+    return res.status(200).json({
+      success: true,
+      message: "Амжилттай",
+      data: results,
+    });
+  } catch (error) {
+    return res.status(200).json({
+      success: false,
+      message: error,
+    });
+  }
+};
 export const one = async (req: any, res: Response) => {
   const { id } = req.params;
   try {
