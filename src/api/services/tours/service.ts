@@ -46,13 +46,19 @@ const where = [
       author: { $arrayElemAt: ["$author", 0] },
       listingCategory: { $arrayElemAt: ["$listingCategory", 0] },
       lang: 1,
+      pre_payment: 1,
     },
   },
 ];
 
 export const service_find = async (body: any, sort: any) => {
   try {
-    const res_find = await tour_model.aggregate([...where]);
+    const res_find = await tour_model.aggregate([
+      {
+        $match: body,
+      },
+      ...where,
+    ]);
 
     const res = await tour_model.find(body).sort(sort);
     return Promise.resolve(res_find);
